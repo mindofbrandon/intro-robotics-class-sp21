@@ -1,6 +1,6 @@
 # parameters
-ARG REPO_NAME="eece4560-base"
-ARG DESCRIPTION="Base class repo for UML EECE 4560"
+ARG REPO_NAME="intro-robotics-class-sp21"
+ARG DESCRIPTION="Base class repo for intro-robotics-class-sp21"
 ARG MAINTAINER="Brandon Zuniga (brandon_zuniga@student.uml.edu)"
 # pick an icon from: https://fontawesome.com/v4.7.0/icons/
 ARG ICON="cube"
