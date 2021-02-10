@@ -8,10 +8,19 @@ def talker():
     rospy.init_node('talker', anonymous=True)
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
-        hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(hello_str)
-        pub.publish(hello_str)
+
+        # Program to display the Fibonacci sequence up to n-th term
+        # first two terms
+        n1, n2 = 0, 1
+        count = 0
+
+        pub.publish(n1)
         rate.sleep()
+
+        nth = n1 + n2
+        # update values
+        n1 = n2
+        n2 = nth
 
 if __name__ == '__main__':
     try:
