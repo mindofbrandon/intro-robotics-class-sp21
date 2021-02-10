@@ -1,29 +1,30 @@
-#!/usr/bin/env python
-# license removed for brevity
+#!/usr/bin/env python3
+# Adapted from http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29
+
 import rospy
 from std_msgs.msg import String
 
-def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-    while not rospy.is_shutdown():
 
-        # Program to display the Fibonacci sequence up to n-th term
-        # first two terms
-        n1, n2 = 0, 1
-        count = 0
+class Talker:
+    def __init__(self):
+        self.pub = rospy.Publisher('chatter', String, queue_size=10)
 
-        pub.publish(n1)
-        rate.sleep()
+    def talk(self):
+        n1, n2 = 0, 1           # initial fib terms
 
-        nth = n1 + n2
-        # update values
+        rospy.loginfo(n1)
+        self.pub.publish(n1)    # print fib sequence
+        nth = n1 + n2           # update value
         n1 = n2
         n2 = nth
 
-if __name__ == '__main__':
-    try:
-        talker()
-    except rospy.ROSInterruptException:
-        pass
+    if __name__ == '__main__':
+        try:
+            rospy.init_node('talker', anonymous=True)
+            t = Talker()
+            rate = rospy.Rate(1)  # 1Hz
+            while not rospy.is_shutdown():
+                t.talk()
+                rate.sleep()
+        except rospy.ROSInterruptException:
+            pass
