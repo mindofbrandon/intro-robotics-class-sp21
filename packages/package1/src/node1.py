@@ -25,7 +25,7 @@ if __name__ == '__main__':
     try:
         rospy.init_node('talker', anonymous=True)
         t = Talker()
-        rate = rospy.Rate(.01)  # 1hz
+        rate = rospy.Rate(.0001)  # 1hz
         while not rospy.is_shutdown():
             t.talk()
             rate.sleep()
