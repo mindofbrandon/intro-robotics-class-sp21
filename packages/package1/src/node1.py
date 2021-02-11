@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# Adapted from http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29
+# Adapted from https://www.programiz.com/python-programming/examples/fibonacci-sequence
 
 import rospy
 from std_msgs.msg import String
 
-n1, n2 = 0, 1
+n1, n2 = 0, 1               # initial terms for Fibonacci sequence
 
 
 class Talker:
@@ -16,10 +16,10 @@ if __name__ == '__main__':
     try:
         rospy.init_node('talker', anonymous=True)
         t = Talker()
-        rate = rospy.Rate(.1)  # 1hz
+        rate = rospy.Rate(1)  # 1hz
         while not rospy.is_shutdown():
             rospy.loginfo(n1)
-            self.pub.publish(n1)
+            print(n1)
             nth = n1 + n2
             # update values
             n1 = n2
