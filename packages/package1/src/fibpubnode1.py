@@ -9,14 +9,13 @@ n2 = 1
 
 
 def fib():
-
     return n1
 
 
 def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(1)  # 1Hz
+    pub = rospy.Publisher("/input", String, queue_size=10)  # node is pub to "chatter" topic; should this be "input"?
+    rospy.init_node('talker', anonymous=True)  # tells rospy the name of node is "talker"
+    rate = rospy.Rate(1)  # 1Hz, loops once per second
     while not rospy.is_shutdown():
         global n1
         global n2
