@@ -8,8 +8,8 @@ from mystery_package.msg import UnitsLabelled
 
 class Listener:
     def __init__(self):
-        rospy.Subscriber("output1", Float32, self.callback)             # subscribe to each topic mys_node publishes?
-        rospy.Subscriber("output2", UnitsLabelled, self.callback)       # subscribe to each topic mys_node publishes?
+        rospy.Subscriber("/output1", Float32, self.callback)             # subscribe to each topic mys_node publishes?
+        rospy.Subscriber("/output2", UnitsLabelled, self.callback)       # subscribe to each topic mys_node publishes?
 
     def callback(self, msg):
         rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data)   # this never reaches in roscore
