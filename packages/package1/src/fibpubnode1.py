@@ -14,7 +14,7 @@ def fib():
 
 
 def talker():
-    pub = rospy.Publisher("input", Float32, queue_size=10)  # node is publishing to input topic?
+    pub = rospy.Publisher("/input", Float32, queue_size=10)  # node is publishing to input topic?
     rospy.init_node('fibpubnode1', anonymous=True)  # tells rospy the name of node is "fibpubnode1"
     rate = rospy.Rate(1)  # 1Hz, loops once per second
     while not rospy.is_shutdown():
