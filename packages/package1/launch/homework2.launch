@@ -2,5 +2,6 @@
   <group ns="mystery">
     <node pkg="package1" name="talker" type="fibpubnode1.py"/>
     <node pkg="package1" name="listener" type="subnode1.py"/>
+    <node pkg="mystery_node" name="listener" type="mystery_node.py"/>
   </group>
 </launch>

@@ -5,8 +5,7 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 
-n1 = 0
-n2 = 1
+
 
 
 def fib():
@@ -18,10 +17,10 @@ def talker():
     rospy.init_node('fibpubnode1', anonymous=True)  # tells rospy the name of node is "fibpubnode1"
     rate = rospy.Rate(1)  # 1Hz, loops once per second
     while not rospy.is_shutdown():
-        global n1
-        global n2
+        n1 = 0
+        n2 = 1
         rospy.loginfo(str(fib()))
-        pub.publish(str(fib()))
+        pub.publish(fib())
         nth = n1 + n2
         n1 = n2
         n2 = nth
