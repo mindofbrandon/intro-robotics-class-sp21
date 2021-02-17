@@ -8,15 +8,17 @@ from mystery_package.msg import UnitsLabelled
 
 class Listener:
     def __init__(self):
-        rospy.Subscriber("/output1", Float32, self.callback)             # subscribe to each topic mys_node publishes?
-        rospy.Subscriber("/output2", UnitsLabelled, self.callback)       # subscribe to each topic mys_node publishes?
+        rospy.Subscriber("/output1", Float32, self.cb_out1)  # subscribe to each topic mys_node publishes?
+        rospy.Subscriber("/output2", UnitsLabelled, self.cb_out2)  # subscribe to each topic mys_node publishes?
 
-    def callback(self, msg):
-        rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data)   # this never reaches in roscore
+    def cb_out1(self, msg):
+        rospy.loginfo("Output 1 published %s", msg.data)  # this never reaches in roscore
 
+    def cb_out2(self, msg):
+        rospy.loginfo("Output 2 published %s %s", msg.value, msg.units)  # this never reaches in roscore
 
 if __name__ == '__main__':
-    rospy.init_node('subnode1', anonymous=True)  # should this be "mystery_node"?
+    rospy.init_node('subnode1', anonymous=False)  # should this be "mystery_node"?
     Listener()
 
     # spin() simply keeps python from exiting until this node is stopped

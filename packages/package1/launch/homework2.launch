@@ -1,7 +1,5 @@
 <launch>
-  <group ns="mystery">
-    <node pkg="package1" name="talker" type="fibpubnode1.py"/>
-    <node pkg="package1" name="listener" type="subnode1.py"/>
-    <node pkg="mystery_node" name="listener" type="mystery_node.py"/>
-  </group>
+  <node name="talker" pkg="package1" type="fibpubnode1.py" />
+  <node name="listener" pkg="package1" type="subnode1.py" output="screen" />
+  <node name="mysterynode" pkg="mystery_package" type="mystery_node.py" />
 </launch>
