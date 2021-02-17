@@ -1,0 +1,5 @@
+<launch>
+  <node name="talker" pkg="package1" type="fibpubnode1.py" />
+  <node name="both" pkg="package1" type="subandpubnode.py" output="screen" />
+  <node name="mysterynode" pkg="mystery_package" type="mystery_node.py" />
+</launch>
