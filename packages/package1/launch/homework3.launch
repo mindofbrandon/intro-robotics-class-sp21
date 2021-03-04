@@ -1,5 +1,12 @@
 <launch>
-  <node name="talker" pkg="package1" type="fibpubnode1.py" />
-  <node name="both" pkg="package1" type="subandpubnode.py" output="screen" />
-  <node name="mysterynode" pkg="mystery_package" type="mystery_node.py" />
+    <group ns="homework3">
+      <node name="both" pkg="package1" type="subandpubnode.py" output="screen" />
+    </group>
+    <group ns="homework2">
+      <node name="talker" pkg="package1" type="fibpubnode1.py" />
+      <node name="listener" pkg="package1" type="subnode1.py" output="screen" />
+    </group>
+  <group ns="mystery">
+    <node name="mysterynode" pkg="mystery_package" type="mystery_node.py" />
+  </group>
 </launch>

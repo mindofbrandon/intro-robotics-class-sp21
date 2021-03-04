@@ -7,7 +7,7 @@ from mystery_package.msg import UnitsLabelled
 
 class SubAndPub:
     def __init__(self):
-        rospy.Subscriber("/output2", UnitsLabelled, self.callback)  # subscribe to output2 topic from mystery node
+        rospy.Subscriber("/mystery/output2", UnitsLabelled, self.callback)  # subscribe to output2 topic from mystery node
         self.pub = rospy.Publisher("meterstofeet", UnitsLabelled, queue_size=10)  # node is publishing to
         self.pub_msg = UnitsLabelled()
         self.pub_msg.units = "feet"

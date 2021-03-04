@@ -6,7 +6,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Float32
 
 def talker():
-    pub = rospy.Publisher("/input", Float32, queue_size=10)  # node is publishing to input topic
+    pub = rospy.Publisher("/mystery/input", Float32, queue_size=10)  # node is publishing to input topic
     rospy.init_node('fibpubnode1', anonymous=False)  # tells rospy the name of node is "fibpubnode1"
     # "fibpubnode1" gets overridden by launch file, real name in launch file is "talker"
     # anon = false to remove long tag at end of node
