@@ -1,0 +1,15 @@
+<launch>
+    <param name="units" type="str" value="meters" />
+    <group ns="homework4">
+      <node name="converter" pkg="package1" type="converter.py" output="screen" />
+    </group>
+    <group ns="homework2">
+      <node name="talker" pkg="package1" type="fibpubnode1.py" />
+      <node name="listener" pkg="package1" type="subnode1.py" output="screen">
+        <remap from="/mystery/output2" to="/homework4/converted_total"/>
+        </node>
+    </group>
+  <group ns="mystery">
+    <node name="mysterynode" pkg="mystery_package" type="mystery_node.py" />
+  </group>
+</launch>
