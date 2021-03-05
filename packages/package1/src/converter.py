@@ -25,7 +25,7 @@ class Converter:
         if rospy.has_param("meters"):
             self.mode = rospy.get_param("meters")
             rospy.set_param("meters", self.mode)
-            # self.pub_msg.units = "meters" # maybe if i change this in all of them it'll work?
+            self.pub_msg.units = "meters"  # maybe if i change this in all of them it'll work?
             datainmeters = msg.value
             rospy.loginfo("%s %s", datainmeters, self.mode)  # output the conversion
             self.pub.publish(datainmeters, self.mode)  # publish value to rostopic echo converted_total
