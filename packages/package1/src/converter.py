@@ -3,35 +3,29 @@
 import rospy
 from std_msgs.msg import Float32
 from mystery_package.msg import UnitsLabelled
-rospy.set_param("units", "meters")
 
 class Converter:
     def __init__(self):
         rospy.Subscriber("/mystery/output2", UnitsLabelled, self.callback)  # subscribe to output2 topic from mystery node
         self.pub = rospy.Publisher("converted_total", UnitsLabelled, queue_size=10)  # node is publishing topic to converted_total
         self.pub_msg = UnitsLabelled()
-        self.pub_msg.units = "feet"
+        # self.pub_msg.units = ""
 
     def callback(self, msg):
-        if rospy.has_param("units"):
-            self.units = rospy.get_param("units")
-        if self.units == "meters":
-            self.units = rospy.get_param("units")
-            self.pub_msg.units = "meters"  # convert meters to feet and store value
-            self.pub.publish(msg.value, self.units)  # publish value to rostopic echo meterstofeet
-            rospy.loginfo("%s %s", msg.value, self.pub_msg.units)  # output the conversion
+        if rospy.has_param("units"):  # make sure parameter exists in launch file
+            self.pub_msg.units = rospy.get_param("units")  # set default units (meters) to pub_msg.units
 
-        elif self.units == "feet":
-            self.units = rospy.get_param("units")
-            self.pub_msg.units = "feet"  # convert meters to feet and store value
-            self.pub.publish(msg.value, self.units)  # publish value to rostopic echo meterstofeet
-            rospy.loginfo("%s %s", msg.value, self.pub_msg.units)  # output the conversion
+        if self.pub_msg.units == "meters":
+            datainmeters = msg.value
+            self.pub.publish(datainmeters, self.pub_msg.units)  # publish value to rostopic echo converter
 
-        elif self.units == "smoots":
-            self.units = rospy.get_param("units")
-            self.pub_msg.units = "smoots"  # convert meters to feet and store value
-            self.pub.publish(msg.value, self.pub_msg.units)  # publish value to rostopic echo meterstofeet
-            rospy.loginfo("%s %s", msg.value, self.units)  # output the conversion
+        elif self.pub_msg.units == "feet":
+            datainfeet = msg.value * 3.2808
+            self.pub.publish(datainfeet, self.pub_msg.units)  # publish value to rostopic echo converter
+
+        elif self.pub_msg.units == "smoots":
+            datainsmoots = msg.value * .7018
+            self.pub.publish(datainsmoots, self.pub_msg.units)  # publish value to rostopic echo converter
 
 
 
