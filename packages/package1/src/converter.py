@@ -13,7 +13,7 @@ class Converter:
 
     def callback(self, msg):
         if rospy.has_param("units"):  # make sure parameter exists in launch file
-            self.pub_msg.units = rospy.get_param("units")  # set default units (meters) to pub_msg.units
+            self.pub_msg.units = rospy.get_param("units")  # set default units (smoots) to pub_msg.units
 
         if self.pub_msg.units == "meters":
             datainmeters = msg.value

@@ -1,5 +1,5 @@
 <launch>
-    <param name="/homework4/units" type="str" value="meters" />
+    <param name="/homework4/units" type="str" value="smoots" />
     <group ns="homework4">
       <node name="converter" pkg="package1" type="converter.py" output="screen" />
     </group>
