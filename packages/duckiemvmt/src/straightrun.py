@@ -11,6 +11,8 @@ from duckietown_msgs.msg import Twist2DStamped  # contains Header header, float3
 class StraightRun:
     def __init__(self):
         self.pub = rospy.Publisher("/car_cmd_switch_node/cmd", Twist2DStamped, queue_size=10)  # publish to car_cmd to imitate lane following
+        # add a subscriber to listen to fsm state
+        # need a flag to figure out fsm state
 
     def movefwd(self, fwdvelocity):
         movement = Twist2DStamped()
@@ -20,17 +22,19 @@ class StraightRun:
     def stop(self):
         movement = Twist2DStamped()
         movement.v = 0
+        self.pub.publish(movement)
 
 
 if __name__ == '__main__':
     rospy.init_node('straightrun')
+    s = StraightRun()  # needs to be used for movefwd and stop functions
     i = 0
     rate = rospy.Rate(1)  # 1Hz, loops once per second
 
     while i < 10:
-        movefwd(1)
+        s.movefwd(1)
         i += 1
-    stop()
+    s.stop()
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
