@@ -13,26 +13,15 @@ class StraightRun:
         self.pub = rospy.Publisher("car_cmd_switch_node/cmd", Twist2DStamped, queue_size=10)  # publish to car_cmd to imitate lane following
         rospy.Subscriber("fsm_node/mode", FSMState, self.cb_state)  # subscribe
         self.pub_state = FSMState()
+        rospy.loginfo("received %s", self.pub_state)
         # add a subscriber to listen to fsm state
         # need a flag to figure out fsm state
 
         # NORMAL_JOYSTICK_CONTROL
         # LANE_FOLLOWING
 
-    def movefwd(self, fwdvelocity):
-        movement = Twist2DStamped()
-        movement.v = fwdvelocity
-        self.pub.publish(movement)
-
-    def stop(self):
-        movement = Twist2DStamped()
-        movement.v = 0
-        self.pub.publish(movement)
-
-    def cb_state(self, x):
-        bruh = x
-        flag = FSMState()
-        rospy.loginfo("received %s, %s", flag, bruh)  # output the conversion
+    def cb_state(self, state):
+        rospy.loginfo("received %s", self.pub_state)  # output the conversion
 
 
 if __name__ == '__main__':
