@@ -10,18 +10,27 @@ from duckietown_msgs.msg import Twist2DStamped, FSMState, BoolStamped  # contain
 
 class StraightRun:
     def __init__(self):
-        self.pub = rospy.Publisher("car_cmd_switch_node/cmd", Twist2DStamped, queue_size=10)  # publish to car_cmd to imitate lane following
         rospy.Subscriber("fsm_node/mode", FSMState, self.cb_state)  # subscribe
-        self.pub_state = FSMState()
-        rospy.loginfo("received %s", self.pub_state)
-        # add a subscriber to listen to fsm state
-        # need a flag to figure out fsm state
+        self.carnode = rospy.Publisher("car_cmd_switch_node/cmd", Twist2DStamped, queue_size=10)  # publish to car_cmd to imitate lane following
+        self.carnode_move = Twist2DStamped()
 
         # NORMAL_JOYSTICK_CONTROL
         # LANE_FOLLOWING
 
-    def cb_state(self, state):
-        rospy.loginfo("received %s", self.pub_state)  # output the conversion
+    def cb_state(self, state_val):
+        state = state_val.state
+
+        if state == "NORMAL_JOYSTICK_CONTROL":
+
+            print("state is: %s", state)
+            rospy.loginfo("state is: %s", state)
+            # self.carnode.publish(self.carnode_move)
+        elif state == "LANE_FOLLOWING":
+            self.carnode_move.v = .5
+            print("state is: %s", state)
+            rospy.loginfo("state is: %s", state)
+            self.carnode.publish(self.carnode_move)
+
 
 
 if __name__ == '__main__':

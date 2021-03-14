@@ -35,7 +35,7 @@ class CoordTF:
         # |  .707  -.707   5 |
         # |     0      0   1 |
 
-        # subscribe to input and do calculations with matrices
+        # subscribe to input and save values from callback; do calculations with matrices
         x_coord = values.x  # save x coord
         y_coord = values.y  # save y coord
         rpx = numpy.matrix([[x_coord], [y_coord], [1]])
