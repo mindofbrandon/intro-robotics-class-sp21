@@ -51,6 +51,7 @@ class StraightRun:
             while i < 2:
                 self.carnode_move.omega = 1
                 self.carnode.publish(self.carnode_move)
+                i += 1
 
             # stop rotating
             self.carnode_move.omega = 0
