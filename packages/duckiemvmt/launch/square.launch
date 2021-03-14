@@ -2,7 +2,7 @@
 
   <group ns="$(env VEHICLE_NAME)">
 
-    <node name="squarerun" pkg="duckiemvmt" type="straightrun.py"/>
+    <node name="squarerun" pkg="duckiemvmt" type="squarerun.py"/>
 
   </group>
 

@@ -19,22 +19,35 @@ class StraightRun:
 
     def cb_state(self, state_val):
         state = state_val.state
+        i = 0
 
         if state == "NORMAL_JOYSTICK_CONTROL":
-
             print("state is: %s", state)
             rospy.loginfo("state is: %s", state)
             # self.carnode.publish(self.carnode_move)
         elif state == "LANE_FOLLOWING":
-            self.carnode_move.v = .5
-            print("state is: %s", state)
-            rospy.loginfo("state is: %s", state)
+
+
+            rate = rospy.Rate(1)  # 1Hz, loops once per second
+            rospy.loginfo("counter before: %s", i)
+            # rospy.loginfo("state is: %s", state)
+            while i < 2:
+                self.carnode_move.v = .5
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in loop: %s", i)
+                i += 1
+                rate.sleep()
+
+            self.carnode_move.v = 0
             self.carnode.publish(self.carnode_move)
+            rospy.loginfo("counter at end: %s", i)
+            rospy.loginfo("stop moving")
 
 
 
 if __name__ == '__main__':
     rospy.init_node('straightrun')
+    j = 0
     StraightRun()  # needs to be used for movefwd and stop functions
     # i = 0
     # rate = rospy.Rate(1)  # 1Hz, loops once per second

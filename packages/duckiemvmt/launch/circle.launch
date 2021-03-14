@@ -2,7 +2,7 @@
 
   <group ns="$(env VEHICLE_NAME)">
 
-    <node name="circlerun" pkg="duckiemvmt" type="straightrun.py"/>
+    <node name="circlerun" pkg="duckiemvmt" type="circlerun.py"/>
 
   </group>
 
