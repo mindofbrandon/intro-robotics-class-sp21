@@ -18,6 +18,7 @@ class StraightRun:
         # LANE_FOLLOWING
 
     def cb_state(self, state_val):
+        initialstate = state_val.state
         state = state_val.state
         i = 0
         j = 0
@@ -26,7 +27,7 @@ class StraightRun:
             print("state is: %s", state)
             rospy.loginfo("state is: %s", state)
             # self.carnode.publish(self.carnode_move)
-        elif state == "LANE_FOLLOWING":
+        elif state == "LANE_FOLLOWING" & initialstate != "LANE_FOLLOWING":
 
 
             rate = rospy.Rate(1)  # 1Hz, loops once per second
@@ -54,7 +55,7 @@ class StraightRun:
             rospy.loginfo("Rotate 90 degrees")
             while i < 4:
 
-                self.carnode_move.omega = .15
+                self.carnode_move.omega = .2
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 rate.sleep()
@@ -94,7 +95,7 @@ class StraightRun:
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
             while i < 8:
-                self.carnode_move.omega = .15
+                self.carnode_move.omega = .2
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 rate.sleep()
@@ -134,7 +135,7 @@ class StraightRun:
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
             while i < 12:
-                self.carnode_move.omega = .15
+                self.carnode_move.omega = .2
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 rate.sleep()
@@ -174,7 +175,7 @@ class StraightRun:
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
             while i < 16:
-                self.carnode_move.omega = .15
+                self.carnode_move.omega = .2
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 rate.sleep()
