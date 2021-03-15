@@ -8,7 +8,7 @@ from duckietown_msgs.msg import Twist2DStamped, FSMState, BoolStamped  # contain
 # float32 omega controls angular velocity
 
 
-class StraightRun:
+class SquareRun:
     def __init__(self):
         rospy.Subscriber("fsm_node/mode", FSMState, self.cb_state)  # subscribe
         self.carnode = rospy.Publisher("car_cmd_switch_node/cmd", Twist2DStamped, queue_size=10)  # publish to car_cmd to imitate lane following
@@ -213,7 +213,7 @@ class StraightRun:
 
 if __name__ == '__main__':
     rospy.init_node('straightrun')
-    StraightRun()  # needs to be used for movefwd and stop functions
+    SquareRun()  # needs to be used for movefwd and stop functions
     # i = 0
     # rate = rospy.Rate(1)  # 1Hz, loops once per second
 
