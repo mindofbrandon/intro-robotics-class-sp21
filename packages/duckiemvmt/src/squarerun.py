@@ -18,7 +18,6 @@ class StraightRun:
         # LANE_FOLLOWING
 
     def cb_state(self, state_val):
-        initialstate = state_val.state
         state = state_val.state
         i = 0
         j = 0
@@ -27,7 +26,7 @@ class StraightRun:
             print("state is: %s", state)
             rospy.loginfo("state is: %s", state)
             # self.carnode.publish(self.carnode_move)
-        elif state == "LANE_FOLLOWING" & initialstate != "LANE_FOLLOWING":
+        elif state == "LANE_FOLLOWING":
 
 
             rate = rospy.Rate(1)  # 1Hz, loops once per second
