@@ -20,6 +20,7 @@ class StraightRun:
     def cb_state(self, state_val):
         state = state_val.state
         i = 0
+        j = 0
 
         if state == "NORMAL_JOYSTICK_CONTROL":
             print("state is: %s", state)
@@ -41,21 +42,21 @@ class StraightRun:
 
             #stop car
             rospy.loginfo("stop moving")
-            while i < 4:
+            while i < 3:
                 self.carnode_move.v = 0
                 self.carnode.publish(self.carnode_move)
                 i += 1
-
-
+                rate.sleep()
 
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
-            while i < 6:
+            while i < 4:
 
-                self.carnode_move.omega = 5
+                self.carnode_move.omega = .5
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 i += 1
+                rate.sleep()
 
             # stop rotating
             self.carnode_move.omega = 0
@@ -63,12 +64,125 @@ class StraightRun:
             # self.carnode.publish(self.carnode_move)
             rospy.loginfo("counter at end: %s", i)
 
+            ##########################################################
+
+            # move 1m
+            while i < 2:
+                self.carnode_move.v = .8
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in loop: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop car
+            rospy.loginfo("stop moving")
+            while i < 3:
+                self.carnode_move.v = 0
+                self.carnode.publish(self.carnode_move)
+                i += 1
+                rate.sleep()
+
+            # rotate 90 degrees
+            rospy.loginfo("Rotate 90 degrees")
+            while i < 4:
+                self.carnode_move.omega = .5
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in turning: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop rotating
+            self.carnode_move.omega = 0
+            self.carnode.publish(self.carnode_move)
+            # self.carnode.publish(self.carnode_move)
+            rospy.loginfo("counter at end: %s", i)
+
+            #######################################################
+
+            # move 1m
+            while i < 5:
+                self.carnode_move.v = .8
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in loop: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop car
+            rospy.loginfo("stop moving")
+            while i < 6:
+                self.carnode_move.v = 0
+                self.carnode.publish(self.carnode_move)
+                i += 1
+                rate.sleep()
+
+            # rotate 90 degrees
+            rospy.loginfo("Rotate 90 degrees")
+            while i < 7:
+                self.carnode_move.omega = .5
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in turning: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop rotating
+            self.carnode_move.omega = 0
+            self.carnode.publish(self.carnode_move)
+            # self.carnode.publish(self.carnode_move)
+            rospy.loginfo("counter at end: %s", i)
+
+            ########################################################
+
+            # move 1m
+            while i < 8:
+                self.carnode_move.v = .8
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in loop: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop car
+            rospy.loginfo("stop moving")
+            while i < 9:
+                self.carnode_move.v = 0
+                self.carnode.publish(self.carnode_move)
+                i += 1
+                rate.sleep()
+
+            # rotate 90 degrees
+            rospy.loginfo("Rotate 90 degrees")
+            while i < 10:
+                self.carnode_move.omega = .5
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in turning: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop rotating
+            self.carnode_move.omega = 0
+            self.carnode.publish(self.carnode_move)
+            # self.carnode.publish(self.carnode_move)
+            rospy.loginfo("counter at end: %s", i)
+
+            # move 1m
+            while i < 11:
+                self.carnode_move.v = .8
+                self.carnode.publish(self.carnode_move)
+                rospy.loginfo("counter in loop: %s", i)
+                i += 1
+                rate.sleep()
+
+            # stop car
+            rospy.loginfo("stop moving")
+            while i < 12:
+                self.carnode_move.v = 0
+                self.carnode.publish(self.carnode_move)
+                i += 1
+                rate.sleep()
 
 
 
 if __name__ == '__main__':
     rospy.init_node('straightrun')
-    j = 0
     StraightRun()  # needs to be used for movefwd and stop functions
     # i = 0
     # rate = rospy.Rate(1)  # 1Hz, loops once per second
