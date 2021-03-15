@@ -85,7 +85,7 @@ class StraightRun:
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
             while i < 4:
-                self.carnode_move.omega = .5
+                self.carnode_move.omega = .3
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 i += 1
@@ -118,7 +118,7 @@ class StraightRun:
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
             while i < 7:
-                self.carnode_move.omega = .5
+                self.carnode_move.omega = .3
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 i += 1
@@ -151,7 +151,7 @@ class StraightRun:
             # rotate 90 degrees
             rospy.loginfo("Rotate 90 degrees")
             while i < 10:
-                self.carnode_move.omega = .5
+                self.carnode_move.omega = .3
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in turning: %s", i)
                 i += 1
