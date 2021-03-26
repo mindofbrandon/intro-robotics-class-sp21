@@ -1,0 +1,3 @@
+<launch>
+      <node name="imageprocess" pkg="imageprocessing" type="imageprocess.py" output="screen" />
+</launch>
