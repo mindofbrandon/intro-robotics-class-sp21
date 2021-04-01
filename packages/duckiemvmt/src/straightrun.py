@@ -32,14 +32,14 @@ class StraightRun:
             rospy.loginfo("counter before: %s", i)
             # rospy.loginfo("state is: %s", state)
             while i < 2:
-                self.carnode_move.v = .5
-                self.carnode.publish(self.carnode_move)
+                self.carnode_move.v = .5  # set velocity of robot to .5
+                self.carnode.publish(self.carnode_move)  # send velocity to robot to actually move
                 rospy.loginfo("counter in loop: %s", i)
                 i += 1
                 rate.sleep()
 
-            self.carnode_move.v = 0
-            self.carnode.publish(self.carnode_move)
+            self.carnode_move.v = 0  # set velocity to 0 once it finishes
+            self.carnode.publish(self.carnode_move)  # send velocity to robot to actually stop
             rospy.loginfo("counter at end: %s", i)
             rospy.loginfo("stop moving")
 

@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
-# This is lab3 and done on the physical robot
+# This is lab3 and done on physical robot
 import rospy
 import math
 # from std_msgs.msg import Float32
-from duckietown_msgs.msg import Pose2DStamped  #
-from odometry_hw.msg import DistWheel  # needed for publisher
-# float64 dist_wheel_left
-# float64 dist_wheel_right
+from duckietown_msgs.msg import Pose2DStamped, WheelsCmdStamped  # needed for subscribers
 
-from odometry_hw.msg import Pose2D
+# from WheelsCmdStamped:
+# Header header
+# float32 vel_left
+# float32 vel_right
 
-
+# from Pose2DStamped:
 # float64 x
 # float64 y
 # float64 theta
 
-class OdomPose:
+class OdomCalc:
     def __init__(self):
-        rospy.Subscriber("/dist_wheel", DistWheel, self.cb_dist)  # subscribe to get wheel movement
-        self.odom = rospy.Publisher("/pose", Pose2D, queue_size=10)  # publish to /pose
-        self.odom_positions = Pose2D()
+        rospy.Subscriber("wheels_driver_node/wheels_cmd", WheelsCmdStamped, self.cb_wheels)  # subscribe to get wheel movement
+        self.odom = rospy.Publisher("physicalpose", Pose2DStamped, queue_size=10)  # publish to /physicalpose
+        self.odom_positions = Pose2DStamped()
 
-    def cb_dist(self, msg):
+    def cb_wheels(self, msg):
 
         global i
         global xpos_initial
@@ -37,15 +37,15 @@ class OdomPose:
         # round(xpos_initial, 1)
         # round(ypos_initial, 1)
         # rospy.loginfo("zero once only %f %f %f", xpos_initial, ypos_initial, theta_initial)
-        movement_left = msg.dist_wheel_left # how to get previous movement added to new movement?
-        movement_right = msg.dist_wheel_right
+        movement_left = msg.vel_left
+        movement_right = msg.vel_right
 
         # rospy.loginfo("movement at left wheel:%s movement at right wheel: %s", movement_left, movement_right)
 
 
 
         delta_s = (movement_left + movement_right) / 2  # arc length
-        delta_theta = (movement_right - movement_left) / (2 * .1)  # Assume that the baseline (distance) between wheels (front or back) 2L=0.1m (so L=0.05m) and wheel distances are given are in meters.
+        delta_theta = (movement_right - movement_left) / (2 * .05)  # Assume that the baseline (distance) between wheels (front or back) 2L=0.1m (so L=0.05m) and wheel distances are given are in meters.
         # delta_theta = alpha
         # alpha is angle which equals delta_theta
 
@@ -74,7 +74,7 @@ class OdomPose:
         self.odom_positions.y = round(ypos_initial, 2)
         self.odom_positions.theta = theta_initial
 
-        rospy.loginfo("mvmt @ x: %f, mvmt @ y: %f, mvmt @ theta: %s", round(xpos_initial, 2), ypos_initial, theta_initial)
+        # rospy.loginfo("mvmt @ x: %f, mvmt @ y: %f, mvmt @ theta: %s", round(xpos_initial, 2), ypos_initial, theta_initial)
 
         self.odom.publish(self.odom_positions)
         # calculate left right and theta assuming robot starts @ x, y, z = 0
@@ -82,7 +82,7 @@ class OdomPose:
 
 
 if __name__ == '__main__':
-    rospy.init_node('odom_pose')
+    rospy.init_node('odom_calc')
     i = 0
-    OdomPose()  # calls class to run code
+    OdomCalc()  # calls class to run code
     rospy.spin()
