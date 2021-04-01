@@ -44,13 +44,13 @@ class OdomPose:
 
 
 
-        delta_s = (movement_left + movement_right) / 2.0  # arc length
-        delta_theta = (movement_right - movement_left) / (2.0 * .05)  # Assume that the baseline (distance) between wheels (front or back) 2L=0.1m (so L=0.05m) and wheel distances are given are in meters.
+        delta_s = (movement_left + movement_right) / 2  # arc length
+        delta_theta = (movement_right - movement_left) / (2 * .1)  # Assume that the baseline (distance) between wheels (front or back) 2L=0.1m (so L=0.05m) and wheel distances are given are in meters.
         # delta_theta = alpha
         # alpha is angle which equals delta_theta
 
-        val_cos = math.cos(theta_initial + (delta_theta / 2.0))
-        val_sin = math.sin(theta_initial + (delta_theta / 2.0))
+        val_cos = math.cos(theta_initial + (delta_theta / 2))
+        val_sin = math.sin(theta_initial + (delta_theta / 2))
 
         delta_x = delta_s * val_cos
         delta_y = delta_s * val_sin
@@ -74,7 +74,7 @@ class OdomPose:
         self.odom_positions.y = round(ypos_initial, 2)
         self.odom_positions.theta = theta_initial
 
-        # rospy.loginfo("mvmt @ x: %f, mvmt @ y: %f, mvmt @ theta: %s", round(xpos_initial, 2), ypos_initial, theta_initial)
+        rospy.loginfo("mvmt @ x: %f, mvmt @ y: %f, mvmt @ theta: %s", round(xpos_initial, 2), ypos_initial, theta_initial)
 
         self.odom.publish(self.odom_positions)
         # calculate left right and theta assuming robot starts @ x, y, z = 0
