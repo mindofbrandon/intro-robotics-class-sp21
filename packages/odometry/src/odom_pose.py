@@ -45,7 +45,7 @@ class OdomPose:
 
 
         delta_s = (movement_left + movement_right) / 2  # arc length
-        delta_theta = (movement_right - movement_left) / (2 * .1)  # Assume that the baseline (distance) between wheels (front or back) 2L=0.1m (so L=0.05m) and wheel distances are given are in meters.
+        delta_theta = (movement_right - movement_left) / (2 * .05)  # Assume that the baseline (distance) between wheels (front or back) 2L=0.1m (so L=0.05m) and wheel distances are given are in meters.
         # delta_theta = alpha
         # alpha is angle which equals delta_theta
 

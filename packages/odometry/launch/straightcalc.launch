@@ -1,7 +1,6 @@
 <launch>
 
   <group ns="$(env VEHICLE_NAME)">
-
     <node name="odom_calc" pkg="odometry" type="odom_calc.py"/>
       <node name="straightrun" pkg="duckiemvmt" type="straightrun.py"/>
 

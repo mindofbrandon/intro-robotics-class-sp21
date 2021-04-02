@@ -15,6 +15,9 @@ from duckietown_msgs.msg import Pose2DStamped, WheelsCmdStamped  # needed for su
 # float64 y
 # float64 theta
 
+# velocity in straight code is .5
+# actual velocity is 0.582343339920044
+
 class OdomCalc:
     def __init__(self):
         rospy.Subscriber("wheels_driver_node/wheels_cmd", WheelsCmdStamped, self.cb_wheels)  # subscribe to get wheel movement
@@ -70,8 +73,8 @@ class OdomCalc:
 
 
 
-        self.odom_positions.x = round(xpos_initial, 2)
-        self.odom_positions.y = round(ypos_initial, 2)
+        self.odom_positions.x = xpos_initial
+        self.odom_positions.y = ypos_initial  # divide by 100 to get meters
         self.odom_positions.theta = theta_initial
 
         # rospy.loginfo("mvmt @ x: %f, mvmt @ y: %f, mvmt @ theta: %s", round(xpos_initial, 2), ypos_initial, theta_initial)
