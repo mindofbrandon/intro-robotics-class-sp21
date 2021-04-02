@@ -74,7 +74,7 @@ class OdomCalc:
 
 
         self.odom_positions.x = xpos_initial
-        self.odom_positions.y = ypos_initial  # divide by 100 to get meters
+        self.odom_positions.y = ypos_initial
         self.odom_positions.theta = theta_initial
 
         # rospy.loginfo("mvmt @ x: %f, mvmt @ y: %f, mvmt @ theta: %s", round(xpos_initial, 2), ypos_initial, theta_initial)
