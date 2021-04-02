@@ -31,9 +31,9 @@ class CircleRun:
             rate = rospy.Rate(1)  # 1Hz, loops once per second
             rospy.loginfo("counter before: %s", i)
             # rospy.loginfo("state is: %s", state)
-            while i < 7:
+            while i < 5:
                 self.carnode_move.v = .5
-                self.carnode_move.omega = 1
+                self.carnode_move.omega = 2.7
                 self.carnode.publish(self.carnode_move)
                 rospy.loginfo("counter in loop: %s", i)
                 i += 1

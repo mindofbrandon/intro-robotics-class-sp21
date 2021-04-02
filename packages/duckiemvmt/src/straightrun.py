@@ -31,7 +31,7 @@ class StraightRun:
             rate = rospy.Rate(1)  # 1Hz, loops once per second
             rospy.loginfo("counter before: %s", i)
             # rospy.loginfo("state is: %s", state)
-            while i < 2:
+            while i < 3:
                 self.carnode_move.v = .5  # set velocity of robot to .5
                 self.carnode.publish(self.carnode_move)  # send velocity to robot to actually move
                 rospy.loginfo("counter in loop: %s", i)
