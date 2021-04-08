@@ -85,7 +85,6 @@ class ImageProcess:
         self.pub_white.publish(ros_white_final)
 
         # ------ YELLOW MASK AND PUBLISHING ------
-
         cv_yellow = cv2.inRange(hsv_image, (27, 50, 150), (30, 255, 255))
 
         # mask both images
