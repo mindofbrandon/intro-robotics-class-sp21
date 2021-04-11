@@ -71,7 +71,7 @@ class ImageProcess:
 
         # erode and shrink to get cleaner image
         kernel_white = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        image_erode = cv2.erode(cv_cropped, kernel_white)
+        image_erode_white = cv2.erode(cv_cropped, kernel_white)
         # what should be done here?
 
 
@@ -91,8 +91,14 @@ class ImageProcess:
         # OR both images to get both grayscales together
         mask_yellow = cv2.bitwise_or(cv_yellow, cv_yellow)
 
+        # dilate and shrink to get cleaner image
+        kernel_yellow = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        image_dilate_yellow = cv2.dilate(cv_cropped, kernel_yellow)
+        # this doesn't work?
+
         # AND both images to get color back
         output_yellow = cv2.bitwise_and(cv_cropped, cv_cropped, mask=mask_yellow)
+        # i try to change to mask=image_dilate but it does not work
 
         # convert new image back to ros in order to publish
         ros_yellow_final = self.bridge.cv2_to_imgmsg(output_yellow, "bgr8")
