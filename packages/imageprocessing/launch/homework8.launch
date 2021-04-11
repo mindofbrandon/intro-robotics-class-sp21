@@ -1,0 +1,4 @@
+<launch>
+      <node name="imageprocess" pkg="imageprocessing" type="imageprocess.py" output="screen" />
+    <node name="edgedetect" pkg="imageprocessing" type="edgedetect.py" output="screen" />
+</launch>
