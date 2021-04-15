@@ -1,0 +1,5 @@
+<launch>
+    <node name="action_srv" pkg="ros_services" type="action_srv.py" output="screen" />
+    <node name="fibonacci_service_node" pkg="example_service" type="example_service_node.py" output="screen" />
+    <node name="fibonacci_client_py" pkg="example_action_server" type="example_client.py" output="screen" />
+</launch>
