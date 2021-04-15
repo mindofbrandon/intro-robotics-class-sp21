@@ -65,18 +65,22 @@ class ImageProcess:
         # ------ WHITE MASK AND PUBLISHING ------
         cv_white = cv2.inRange(hsv_image, (0, 0, 100), (160, 30, 255))
 
-        # mask both images
-        # OR both images to get both grayscales together
-        mask_white = cv2.bitwise_or(cv_white, cv_white)
-
         # erode and shrink to get cleaner image
         kernel_white = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        image_erode_white = cv2.erode(cv_cropped, kernel_white)
-        # what should be done here?
+        image_erode_white = cv2.erode(cv_white, kernel_white)
+
+        # dilate and shrink to get cleaner image
+        kernel_white = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        image_dilate_white = cv2.dilate(image_erode_white, kernel_white)
+        #
+
+        # mask both images
+        # OR both images to get both grayscales together
+        # mask_white = cv2.bitwise_or(image_erode_white, image_erode_white)
 
 
         # AND both images to get color back
-        output_white = cv2.bitwise_and(cv_cropped, cv_cropped, mask=mask_white)
+        output_white = cv2.bitwise_and(cv_cropped, cv_cropped, mask=image_dilate_white)
 
         # convert new image back to ros in order to publish
         ros_white_final = self.bridge.cv2_to_imgmsg(output_white, "bgr8")
@@ -87,17 +91,19 @@ class ImageProcess:
         # ------ YELLOW MASK AND PUBLISHING ------
         cv_yellow = cv2.inRange(hsv_image, (27, 50, 150), (30, 255, 255))
 
+        # dilate and shrink to get cleaner image
+        kernel_yellow = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        image_dilate_yellow = cv2.dilate(cv_yellow, kernel_yellow)
+        #
+
         # mask both images
         # OR both images to get both grayscales together
-        mask_yellow = cv2.bitwise_or(cv_yellow, cv_yellow)
+        # mask_yellow = cv2.bitwise_or(cv_yellow, cv_yellow)
 
-        # dilate and shrink to get cleaner image
-        kernel_yellow = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        image_dilate_yellow = cv2.dilate(cv_cropped, kernel_yellow)
-        # this doesn't work?
+
 
         # AND both images to get color back
-        output_yellow = cv2.bitwise_and(cv_cropped, cv_cropped, mask=mask_yellow)
+        output_yellow = cv2.bitwise_and(cv_cropped, cv_cropped, mask=image_dilate_yellow)
         # i try to change to mask=image_dilate but it does not work
 
         # convert new image back to ros in order to publish
@@ -111,13 +117,13 @@ class ImageProcess:
 
         # mask both images
         # OR both images to get both grayscales together
-        mask = cv2.bitwise_or(cv_white, cv_yellow)
+        mask = cv2.bitwise_or(output_white, output_yellow)
 
         # AND both images to get color back
-        output = cv2.bitwise_and(cv_cropped, cv_cropped, mask=mask)
+        # output = cv2.bitwise_and(cv_cropped, cv_cropped, mask=mask)
 
         # convert new image back to ros in order to publish
-        ros_edited = self.bridge.cv2_to_imgmsg(output, "bgr8")
+        ros_edited = self.bridge.cv2_to_imgmsg(mask, "bgr8")
 
         # publish edited image
         self.pub_masked.publish(ros_edited)

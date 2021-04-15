@@ -20,6 +20,7 @@ class EdgeDetect:
         rospy.Subscriber("image_white", Image, self.cb_white)  # subscribe
         rospy.Subscriber("image_yellow", Image, self.cb_yellow)  # subscribe
 
+        self.pub_canny_edge = rospy.Publisher("canny_edge", Image, queue_size=10)  # publish to imagee
         self.pub_lines_white = rospy.Publisher("image_lines_white", Image, queue_size=10)  # publish to image_white
         self.pub_lines_yellow = rospy.Publisher("image_lines_yellow", Image, queue_size=10)  # publish to image_yellow
         self.bridge = CvBridge()  # used to convert b/t ros and cvimages
@@ -47,12 +48,17 @@ class EdgeDetect:
         self.canny = cv2.Canny(self.cv_cropped, 120, 160)
         cv_canny_mono = self.bridge.cv2_to_imgmsg(self.canny, "mono8")
 
+        # publish edited image
+        self.pub_canny_edge.publish(cv_canny_mono)
+
+
+
     def cb_white(self, msg_white):
         cv_white = self.bridge.imgmsg_to_cv2(msg_white, "mono8")
 
         # mask both images
         # OR both images to get both grayscales together
-        cropped_white_mask = cv2.bitwise_or(cv_white, cv_white)
+        # cropped_white_mask = cv2.bitwise_or(cv_white, cv_white)
 
         # erode and shrink to get cleaner image
         # kernel_white = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
@@ -61,10 +67,14 @@ class EdgeDetect:
         # this needs to be changed to get more solid lines
 
         # AND both images
-        cropped_white_out = cv2.bitwise_and(self.canny, self.canny, mask=cropped_white_mask)
+        cropped_white_out = cv2.bitwise_and(self.canny, self.canny, mask=cv_white)
 
+
+        # longer lines segments are showcased by less (-) and (+) icons
         # perform hough transform
-        hough_white = cv2.HoughLinesP(cropped_white_out, 1, math.pi/180, 8, minLineLength=2, maxLineGap=1)
+        hough_white = cv2.HoughLinesP(cropped_white_out, 1, math.pi/180, 8, minLineLength=5, maxLineGap=3)
+        # after pi/180, arg is:
+        # threshold
 
 
         # need to get color back from hough transform -- why no work?
@@ -86,13 +96,13 @@ class EdgeDetect:
 
         # mask both images
         # OR both images to get both grayscales together
-        cropped_yellow_mask = cv2.bitwise_or(cv_yellow, cv_yellow)
+        # cropped_yellow_mask = cv2.bitwise_or(cv_yellow, cv_yellow)
 
         # AND both images
-        cropped_yellow_out = cv2.bitwise_and(self.canny, self.canny, mask=cropped_yellow_mask)
+        cropped_yellow_out = cv2.bitwise_and(self.canny, self.canny, mask=cv_yellow)
 
         # perform hough transform
-        hough_yellow = cv2.HoughLinesP(cropped_yellow_out, 1, math.pi/180, 8, minLineLength=2, maxLineGap=1)
+        hough_yellow = cv2.HoughLinesP(cropped_yellow_out, 1, math.pi/180, 8, minLineLength=5, maxLineGap=3)
 
         # need to get color back from hough transform -- why no work?
         # edited_hough_yellow = cv2.bitwise_and(hough_white, self.cv_cropped, mask=hough_yellow)
