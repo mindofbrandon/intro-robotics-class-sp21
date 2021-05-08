@@ -77,9 +77,7 @@ class EdgeDetect:
         # threshold
 
 
-        # need to get color back from hough transform -- why no work?
-        # edited_hough_white = cv2.bitwise_and(hough_white, self.cv_cropped, mask=hough_white)
-
+        # need to get color back from hough transform
         edited_hough_white = self.output_lines(self.cv_cropped, hough_white)
 
         # convert new image back to ros in order to publish
@@ -104,9 +102,7 @@ class EdgeDetect:
         # perform hough transform
         hough_yellow = cv2.HoughLinesP(cropped_yellow_out, 1, math.pi/180, 8, minLineLength=5, maxLineGap=3)
 
-        # need to get color back from hough transform -- why no work?
-        # edited_hough_yellow = cv2.bitwise_and(hough_white, self.cv_cropped, mask=hough_yellow)
-
+        # need to get color back from hough transform
         edited_hough_yellow = self.output_lines(self.cv_cropped, hough_yellow)
 
         # convert new image back to ros in order to publish
