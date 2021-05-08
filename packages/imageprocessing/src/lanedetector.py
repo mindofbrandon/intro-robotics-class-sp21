@@ -10,10 +10,15 @@ import numpy as np
 class LaneDetector:
     def __init__(self):
         rospy.Subscriber("camera_node/image/compressed", CompressedImage, self.cb, queue_size=1, buff_size=2**24)
-        self.pub_cropped = rospy.Publisher("image_cropped", Image, queue_size=10)  # publish to image_cropped
-        self.pub_white = rospy.Publisher("image_white", Image, queue_size=10)  # publish to image_white
-        self.pub_yellow = rospy.Publisher("image_yellow", Image, queue_size=10)  # publish to image_yellow
+        self.pub_cropped = rospy.Publisher("image_cropped", Image, queue_size=10)  # takes compressed image, crops, and publishes to image_cropped
+        # self.pub_white = rospy.Publisher("image_white", Image, queue_size=10)  # publish to image_white
+        # self.pub_yellow = rospy.Publisher("image_yellow", Image, queue_size=10)  # publish to image_yellow
         self.pub_masked = rospy.Publisher("image_mask", Image, queue_size=10)  # publish the complete masked image to image_mask
+
+        # these should be the edge detection topics being published
+        self.pub_lines_white = rospy.Publisher("image_lines_white", Image, queue_size=10)  # publish to image_lines_white
+        self.pub_lines_yellow = rospy.Publisher("image_lines_yellow", Image, queue_size=10)  # publish to image_lines_yellow
+
         self.bridge = CvBridge()  # used to convert b/t ros and cvimages
 
         # roslaunch image_processing_hw image_pub.launch index:=2
@@ -31,9 +36,8 @@ class LaneDetector:
         new_image = cv2.resize(cv_image, image_size, interpolation=cv2.INTER_NEAREST)
         cv_cropped = new_image[offset:, :]
 
-
-        # convert new image back to ros in order to publish
-        ros_cropped_final = self.bridge.cv2_to_imgmsg(cv_cropped, "bgr8")
+        # convert new image back to ros in order to publish -- this is not required
+        ros_cropped_final = self.bridge.cv2_to_compressed_imgmsg(cv_cropped, "bgr8")
 
         # publish edited image
         self.pub_cropped.publish(ros_cropped_final)

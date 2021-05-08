@@ -21,8 +21,8 @@ class EdgeDetect:
         rospy.Subscriber("image_yellow", Image, self.cb_yellow)  # subscribe
 
         self.pub_canny_edge = rospy.Publisher("canny_edge", Image, queue_size=10)  # publish to imagee
-        self.pub_lines_white = rospy.Publisher("image_lines_white", Image, queue_size=10)  # publish to image_white
-        self.pub_lines_yellow = rospy.Publisher("image_lines_yellow", Image, queue_size=10)  # publish to image_yellow
+        self.pub_lines_white = rospy.Publisher("image_lines_white", Image, queue_size=10)  # publish to image_lines_white
+        self.pub_lines_yellow = rospy.Publisher("image_lines_yellow", Image, queue_size=10)  # publish to image_lines_yellow
         self.bridge = CvBridge()  # used to convert b/t ros and cvimages
         self.cv_cropped = 0
         self.canny = 0

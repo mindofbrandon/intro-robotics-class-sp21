@@ -49,6 +49,8 @@ class ImageProcess:
         self.pub_cropped.publish(ros_cropped_final)
 
         # ------ WHITE AND YELLOW MASKS AND PUBLISHING ------
+        # should i publish for this part?
+
         # convert cropped image to HSV (hue, saturation, value)
         hsv_image = cv2.cvtColor(cv_cropped, cv2.COLOR_BGR2HSV)
 
